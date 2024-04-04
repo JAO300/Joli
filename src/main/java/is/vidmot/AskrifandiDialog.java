@@ -5,6 +5,7 @@ package is.vidmot;
  *  Viðmótsforritun 2024
  *
  *  Dialog modal til að fá nafn áskrifanda
+ *  þetta er smá prufa
  *
  *****************************************************************************/
 import is.vinnsla.Askrifandi;
