@@ -71,7 +71,7 @@ public class PlayerController  {
 
         if (files != null){
             for (File file : files) {
-                if (file.isFile() && file.getName().toLowerCase().endsWith(".mp3")) {
+                if (file.isFile() && (file.getName().toLowerCase().endsWith(".mp3") || file.getName().toLowerCase().endsWith(".mp4"))) {
                     mp3Files.add(file.getName());
                 }
             }
