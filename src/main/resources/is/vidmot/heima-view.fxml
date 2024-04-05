@@ -17,7 +17,7 @@
          <children>
             <HBox prefHeight="330.0" prefWidth="300.0">
                <children>
-                  <ListView prefHeight="200.0" prefWidth="200.0">
+                  <ListView fx:id="fxSongView" prefHeight="200.0" prefWidth="200.0">
                      <HBox.margin>
                         <Insets bottom="10.0" left="50.0" top="60.0" />
                      </HBox.margin>
@@ -44,7 +44,7 @@
                               <Insets top="30.0" />
                            </VBox.margin>
                            <children>
-                              <ListView fx:id="fxListView" prefHeight="200.0" prefWidth="200.0" onMouseClicked="#onVeljaLista">
+                              <ListView fx:id="fxListView" onMouseClicked="#onVeljaLista" prefHeight="200.0" prefWidth="200.0">
                                  <VBox.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </VBox.margin>

@@ -23,8 +23,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -36,6 +43,7 @@ public class PlayerController  {
     private final String REPEATOFF = "images/repeatOff.png";
     private final String REPEATON = "images/repeatOn.png";
     public ImageView repeatView; // mynd fyrir repeat takkann
+    public ListView fxSongView; // Sýna öll lögin
 
     // viðmótshlutir
     @FXML
@@ -54,6 +62,24 @@ public class PlayerController  {
         Lagalistar.frumstilla();
         ObservableList<String> items = FXCollections.observableArrayList(Lagalistar.getListarAsStringArray());
         fxListView.setItems(items);
+
+        File mediaFolder = new File("src/main/resources/is/vidmot/media");
+
+        List<String> mp3Files = new ArrayList<>();
+
+        File[] files = mediaFolder.listFiles();
+
+        if (files != null){
+            for (File file : files) {
+                if (file.isFile() && file.getName().toLowerCase().endsWith(".mp3")) {
+                    mp3Files.add(file.getName());
+                }
+            }
+        }
+
+        ObservableList<String> songList = FXCollections.observableArrayList(mp3Files);
+
+        fxSongView.setItems(songList);
     }
 
     /**
