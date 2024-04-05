@@ -11,12 +11,18 @@ package is.vidmot;
  *****************************************************************************/
 import is.vinnsla.Askrifandi;
 import is.vinnsla.Lagalistar;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
+
 import javafx.scene.layout.GridPane;
 
 import java.util.Optional;
@@ -39,9 +45,15 @@ public class PlayerController  {
     Button repeatBtn;
     Boolean repeatFlag = false;
 
+    @FXML
+    private ListView<String> fxListView;
+
+
     // frumstilling eftir að hlutur hefur verið smíðaður og .fxml skrá lesin
     public void initialize() {
         Lagalistar.frumstilla();
+        ObservableList<String> items = FXCollections.observableArrayList(Lagalistar.getListarAsStringArray());
+        fxListView.setItems(items);
     }
 
     /**
@@ -49,12 +61,11 @@ public class PlayerController  {
      * @param mouseEvent
      */
     @FXML
-    protected void onVeljaLista(ActionEvent mouseEvent) {
-        // hvaða reitur var valinn
-        int i = GridPane.getRowIndex((Node) mouseEvent.getSource());
-        int j = GridPane.getColumnIndex((Node) mouseEvent.getSource());
-        // skiptum yfir í lagalistann í vinnslunni sem var valið
-        Lagalistar.setIndex(i * 2 + j);
+    protected void onVeljaLista(MouseEvent mouseEvent) {
+        //Hvaða listi var valinn
+        String selectedItem = fxListView.getSelectionModel().getSelectedItem();
+        if(selectedItem != null)
+            System.out.println("Valinn listi: " + selectedItem);
         // skiptum yfir í LAGALISTI view
         ViewSwitcher.switchTo(View.LAGALISTI, false);
     }
