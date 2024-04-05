@@ -15,18 +15,29 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.util.Optional;
+import java.util.Set;
 
 public class PlayerController  {
 
     // fastar
     public static final String ASKRIFANDI = "Áskrifandi";
 
+    private final String REPEATOFF = "images/repeatOff.png";
+    private final String REPEATON = "images/repeatOn.png";
+    public ImageView repeatView; // mynd fyrir repeat takkann
+
     // viðmótshlutir
     @FXML
     protected Button fxAskrifandi;
+
+    // Repeat takki
+    Button repeatBtn;
+    Boolean repeatFlag = false;
 
     // frumstilling eftir að hlutur hefur verið smíðaður og .fxml skrá lesin
     public void initialize() {
@@ -62,4 +73,32 @@ public class PlayerController  {
         utkoma.ifPresent (a -> {
             fxAskrifandi.setText(a.getNafn());});
     }
+
+    /**
+     * Atburðahandler fyrir repeat takkan. Breytir um mynd á takkanum og spilar sama lagið aftur og aftur.
+     * @param actionEvent
+     */
+    public void onRepeat(ActionEvent actionEvent) {
+
+        if (repeatFlag){
+            setjaMynd(repeatView, REPEATOFF); // Breytur um mynd á takkanum
+        }else {
+            setjaMynd(repeatView, REPEATON); // Breytir um mynd á takkanum
+        }
+
+        repeatFlag = !repeatFlag; // Breytir um boolean gildi svo hægt sé að breyta á milli kveikt eða slökkt
+    }
+
+    /**
+     * Setja mynd með nafni á ImageView
+     *
+     * @param fxImageView viðmótshluturinn sem á að uppfærast
+     * @param nafnMynd    nafn á myndinni
+     */
+
+    private void setjaMynd(ImageView fxImageView, String nafnMynd) {
+        System.out.println ("nafn á mynd "+nafnMynd);
+        fxImageView.setImage(new Image(getClass().getResource(nafnMynd).toExternalForm()));
+    }
+
 }
