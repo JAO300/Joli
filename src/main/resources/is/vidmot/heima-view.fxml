@@ -44,7 +44,7 @@
                               <Insets top="30.0" />
                            </VBox.margin>
                            <children>
-                              <ListView fx:id="fxListView" prefHeight="200.0" prefWidth="200.0">
+                              <ListView fx:id="fxListView" prefHeight="200.0" prefWidth="200.0" onMouseClicked="#onVeljaLista">
                                  <VBox.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </VBox.margin>

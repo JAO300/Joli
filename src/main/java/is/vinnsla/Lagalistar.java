@@ -35,6 +35,14 @@ public class Lagalistar {
     }
 
 
+    public static String[] getListarAsStringArray() {
+        String[] strings = new String[listar.length];
+        for (int i = 0; i < listar.length; i++) {
+            strings[i] = "listi" + (i + 1);
+        }
+        return strings;
+    }
+
     // get og set aðferðir
     public static Lagalisti getNuverandi() {
         return listar[index];
