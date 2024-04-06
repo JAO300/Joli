@@ -91,10 +91,10 @@ public class ListiController  {
     protected void onPlayPause(ActionEvent actionEvent) {
         // ef player-inn er spilandi
         if (player.getStatus().equals(MediaPlayer.Status.PLAYING)) {
-            setjaMynd(fxPlayPauseView, PlAY);   // uppfærðu myndina með play (ör)
+            /*setjaMynd(fxPlayPauseView, PlAY);*/   // uppfærðu myndina með play (ör)
             player.pause();                     // pásaðu spilarann
         } else if (player.getStatus().equals(MediaPlayer.Status.PAUSED)) {
-            setjaMynd(fxPlayPauseView, PAUSE);  // uppfærðu myndina með pause
+            /*setjaMynd(fxPlayPauseView, PAUSE);*/  // uppfærðu myndina með pause
             player.play();                      // haltu áfram að spila
         }
     }
@@ -123,7 +123,7 @@ public class ListiController  {
         //  láttu lagalista vita um indexinn á völdu lagi
         lagalisti.setIndex(fxListView.getSelectionModel().getSelectedIndex());
         // uppfæra myndina fyrir lagið
-        setjaMynd(fxMyndLagView, validLag.getMynd());
+        /*setjaMynd(fxMyndLagView, validLag.getMynd());*/
     }
 
     /**
@@ -131,7 +131,7 @@ public class ListiController  {
      */
 
     private void spilaLag() {
-        setjaMynd(fxPlayPauseView, PAUSE);
+        /*setjaMynd(fxPlayPauseView, PAUSE);*/
         // Búa til nýjan player
         setjaPlayer();
         // setja spilun í gang
@@ -145,11 +145,11 @@ public class ListiController  {
      * @param nafnMynd    nafn á myndinni
      */
 
-    private void setjaMynd(ImageView fxImageView, String nafnMynd) {
+    /*private void setjaMynd(ImageView fxImageView, String nafnMynd) {
         System.out.println ("nafn á mynd "+nafnMynd);
         fxImageView.setImage(new Image(getClass().getResource(nafnMynd).toExternalForm()));
     }
-
+*/
     /**
      * Setja upp player fyrir lagið, þ.m.t. at setja handler á hvenær lagið stoppar og tengja
      * lagið við progress bar
