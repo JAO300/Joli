@@ -17,7 +17,7 @@
          <children>
             <HBox prefHeight="330.0" prefWidth="300.0">
                <children>
-                  <ListView prefHeight="200.0" prefWidth="200.0">
+                  <ListView fx:id="fxSongView" prefHeight="200.0" prefWidth="200.0">
                      <HBox.margin>
                         <Insets bottom="10.0" left="50.0" top="60.0" />
                      </HBox.margin>
@@ -44,7 +44,7 @@
                               <Insets top="30.0" />
                            </VBox.margin>
                            <children>
-                              <ListView fx:id="fxListView" prefHeight="200.0" prefWidth="200.0" onMouseClicked="#onVeljaLista">
+                              <ListView fx:id="fxListView" onMouseClicked="#onVeljaLista" prefHeight="200.0" prefWidth="200.0">
                                  <VBox.margin>
                                     <Insets left="50.0" right="50.0" />
                                  </VBox.margin>
@@ -76,7 +76,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="35.0" prefWidth="600.0">
                <children>
-                  <ProgressBar prefHeight="20.0" prefWidth="500.0" progress="0.0" />
+                  <ProgressBar fx:id="fxProgressBar" prefHeight="20.0" prefWidth="500.0" progress="0.0" />
                </children>
             </VBox>
             <HBox prefHeight="35.0" prefWidth="600.0">
@@ -88,11 +88,11 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="151.0">
                            <children>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
+                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onRepeat" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
                                  <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="repeatView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@images/repeat.png" />
+                                          <Image url="@images/repeatOff.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -127,7 +127,7 @@
                      <children>
                         <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
                            <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="fxPlayPauseView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/pause2.png" />
                                  </image>

@@ -5,6 +5,7 @@ package is.vidmot;
  *  Viðmótsforritun 2024
  *
  *  Dialog modal til að fá nafn áskrifanda
+ *  þetta er smá prufa
  *
  *****************************************************************************/
 import is.vinnsla.Askrifandi;
@@ -21,6 +22,7 @@ import java.io.IOException;
 public class AskrifandiDialog extends Dialog<Askrifandi> {
 
     // viðmótshlutur
+    //test
     @FXML
     protected TextField fxNafn; // nafnið á áskrifanda
 
