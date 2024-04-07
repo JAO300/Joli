@@ -16,6 +16,7 @@ import is.vinnsla.Lagalistar;
 import is.vinnsla.Lagalisti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -40,7 +41,7 @@ public class ListiController  {
     @FXML
     protected ListView<Lag> fxListView; // lagalistinn
     @FXML
-    protected ImageView fxMyndLagView;    // mynd fyrir lagið
+    private Button fxNotandi; // nafn notanda
 
     // vinnslan
     private Lagalisti lagalisti; // lagalistinn
@@ -64,6 +65,8 @@ public class ListiController  {
         veljaLag();
         // setur upp player
         setjaPlayer();
+        // setur nafn notenda
+        fxNotandi.setText(PlayerController.getNotandi());
     }
 
     /**

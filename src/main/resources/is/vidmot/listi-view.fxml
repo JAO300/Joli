@@ -32,7 +32,7 @@
                   </VBox>
                   <VBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Skrá inn">
+                        <Button fx:id="fxNotandi" mnemonicParsing="false" text="Skrá inn">
                            <VBox.margin>
                               <Insets right="10.0" />
                            </VBox.margin>

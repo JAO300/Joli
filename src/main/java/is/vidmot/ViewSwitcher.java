@@ -56,5 +56,4 @@ public class ViewSwitcher {
     public static Object lookup(View v) {
         return controllers.get(v);
     }
-
 }

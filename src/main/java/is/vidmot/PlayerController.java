@@ -49,6 +49,7 @@ public class PlayerController  {
     private final String REPEATON = "images/repeatOn.png";
     private final String PlAY = "images/play2.png";
     private final String PAUSE = "images/pause2.png";
+    private static String Notandi = "";
 
 
     // viðmótshlutir
@@ -110,7 +111,6 @@ public class PlayerController  {
         // skiptum yfir í LAGALISTI view
         ViewSwitcher.switchTo(View.LAGALISTI, false);
     }
-
     /**
      * Loggar áskrifanda inn
      *
@@ -122,8 +122,16 @@ public class PlayerController  {
         // sýndu dialoginn
         Optional<Askrifandi> utkoma = dialog.showAndWait();
         // Ef fékkst svar úr dialognum setjum við nafnið á áskrifandanum í notendaviðmótið
-        utkoma.ifPresent (a -> {
-            fxAskrifandi.setText(a.getNafn());});
+        utkoma.ifPresent(a -> {
+            fxAskrifandi.setText(a.getNafn());
+            //geymdir nafn notenda
+            Notandi = a.getNafn();
+        });
+    }
+
+
+    public static String getNotandi() {
+        return Notandi;
     }
 
     /**
