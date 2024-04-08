@@ -54,9 +54,13 @@ public class PlayerController  {
 
 
     // viðmótshlutir
+    @FXML
     public ImageView repeatView; // mynd fyrir repeat takkann
+    @FXML
     public ListView fxSongView; // Sýna öll lögin
+    @FXML
     public ProgressBar fxProgresssBar;
+    @FXML
     public ImageView fxPlayPauseView;
     @FXML
     protected Button fxAskrifandi;
@@ -70,10 +74,8 @@ public class PlayerController  {
     private ListView<String> fxListView;
 
     // vinnsla
-
+    @FXML
     private MediaPlayer player; // ein player breyta per forritið
-    private Lag validLag;       // núverandi valið lag
-    private Lagalisti lagalisti; // lagalistinn
 
 
     // frumstilling eftir að hlutur hefur verið smíðaður og .fxml skrá lesin
@@ -208,6 +210,10 @@ public class PlayerController  {
         }
     }
 
+    /**
+     * Spilar / pásar lagið og breytir um mynd á takkanum samkvæmt því
+     * @param actionEvent
+     */
     @FXML
     protected void onPlayPause(ActionEvent actionEvent) {
         // ef player-inn er spilandi
@@ -220,6 +226,9 @@ public class PlayerController  {
         }
     }
 
+    /**
+     * Spilar næsta lag
+     */
     private void naestaLag(){
         // Get the index of the currently playing song
         if (repeatFlag){
@@ -237,6 +246,10 @@ public class PlayerController  {
 
     }
 
+    /**
+     * Spilar lagið sem er valið
+     * @param nafn nafnið á laginu
+     */
     private void spilaLag(String nafn){
         String mediaPath = "src/main/resources/is/vidmot/media/" + nafn;
 
