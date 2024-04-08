@@ -182,6 +182,8 @@ public class PlayerController  {
             player = new MediaPlayer(media);
             player.play();
 
+            player.setOnEndOfMedia(this::naestaLag);
+
             player.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
                 Duration duration = player.getMedia().getDuration();
                 double progress = newValue.toSeconds() / duration.toSeconds();
@@ -190,5 +192,52 @@ public class PlayerController  {
 
 
         }
+    }
+
+    @FXML
+    protected void onPlayPause(ActionEvent actionEvent) {
+        // ef player-inn er spilandi
+        if (player.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+            setjaMynd(fxPlayPauseView, PlAY);   // uppfærðu myndina með play (ör)
+            player.pause();                     // pásaðu spilarann
+        } else if (player.getStatus().equals(MediaPlayer.Status.PAUSED)) {
+            setjaMynd(fxPlayPauseView, PAUSE);
+            player.play();                      // haltu áfram að spila
+        }
+    }
+
+    private void naestaLag(){
+        // Get the index of the currently playing song
+        if (repeatFlag){
+            String validLag = (String) fxSongView.getSelectionModel().getSelectedItem();
+            spilaLag(validLag);
+        }else {
+            int currentIndex = fxSongView.getSelectionModel().getSelectedIndex();
+
+            // Select the next song in the list (or loop back to the beginning if at the end)
+            int nextIndex = (currentIndex + 1) % fxSongView.getItems().size();
+            fxSongView.getSelectionModel().select(nextIndex);
+            String naesta = (String) fxSongView.getItems().get(nextIndex);
+            spilaLag(naesta);
+        }
+
+    }
+
+    private void spilaLag(String nafn){
+        String mediaPath = "src/main/resources/is/vidmot/media/" + nafn;
+
+        Media media = new Media(new File(mediaPath).toURI().toString());
+        player.stop();
+        player = new MediaPlayer(media);
+        player.play();
+
+        player.setOnEndOfMedia(this::naestaLag);
+
+        player.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            Duration duration = player.getMedia().getDuration();
+            double progress = newValue.toSeconds() / duration.toSeconds();
+            fxProgresssBar.setProgress(progress);
+        });
+
     }
 }
