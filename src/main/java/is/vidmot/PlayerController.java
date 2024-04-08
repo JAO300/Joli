@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -59,6 +60,8 @@ public class PlayerController  {
     public ImageView fxPlayPauseView;
     @FXML
     protected Button fxAskrifandi;
+    @FXML
+    private Slider fxVolumeSlider;
 
     // Repeat takki
     Boolean repeatFlag = false;
@@ -97,6 +100,17 @@ public class PlayerController  {
 
         fxSongView.setItems(songList);
         fxSongView.setOnMouseClicked(this::onVeljaSample);
+
+
+        // Setur upphafsstöðu slider í 50%
+        fxVolumeSlider.setValue(50.0);
+
+
+        fxVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (player != null) {
+                player.setVolume(newValue.doubleValue() / 100.0); // Stilla hljóðstyrk á milli 0 og 1
+            }
+        });
     }
 
     /**

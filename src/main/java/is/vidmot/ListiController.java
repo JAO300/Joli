@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -42,6 +43,8 @@ public class ListiController  {
     protected ListView<Lag> fxListView; // lagalistinn
     @FXML
     private Button fxNotandi; // nafn notanda
+    @FXML
+    private Slider fxVolumeSlider;
 
     // vinnslan
     private Lagalisti lagalisti; // lagalistinn
@@ -67,6 +70,18 @@ public class ListiController  {
         setjaPlayer();
         // setur nafn notenda
         fxNotandi.setText(PlayerController.getNotandi());
+
+        // Setur upphafsstöðu slider í 50%
+        fxVolumeSlider.setValue(50.0);
+        if (player != null) {
+            player.setVolume(0.5); // Setur hljóðstyrk í 50%
+        }
+
+        fxVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (player != null) {
+                player.setVolume(newValue.doubleValue() / 100.0); // Stilla hljóðstyrk á milli 0 og 1
+            }
+        });
     }
 
     /**
