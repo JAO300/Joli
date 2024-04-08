@@ -127,6 +127,8 @@ public class PlayerController  {
             System.out.println("Valinn listi: " + selectedItem);
         // skiptum yfir í LAGALISTI view
         ViewSwitcher.switchTo(View.LAGALISTI, false);
+        //Stoppa player ef lag er í gangi
+        player.stop();
     }
     /**
      * Loggar áskrifanda inn

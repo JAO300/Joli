@@ -50,11 +50,6 @@ public class ListiController  {
     @FXML
     private Button fxNotandi; // nafn notanda
     @FXML
-<<<<<<< HEAD
-=======
-    public ImageView repeatView; // mynd á repeat takka
-    @FXML
->>>>>>> oli
     private Slider fxVolumeSlider;
 
     // vinnslan
