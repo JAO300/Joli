@@ -18,13 +18,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.File;
@@ -62,6 +59,8 @@ public class PlayerController  {
     protected Button fxAskrifandi;
     @FXML
     private Slider fxVolumeSlider;
+    @FXML
+    private MenuButton speedMenuButton; // Spilunarhraði
 
     // Repeat takki
     Boolean repeatFlag = false;
@@ -111,7 +110,17 @@ public class PlayerController  {
                 player.setVolume(newValue.doubleValue() / 100.0); // Stilla hljóðstyrk á milli 0 og 1
             }
         });
+
+        // Sækir playback hraða úr speedMenuButton og stillir hann fyrir lagaspilara.
+        for (MenuItem item : speedMenuButton.getItems()) {
+            item.setOnAction(event -> {
+                String speedText = item.getText();
+                double speed = Double.parseDouble(speedText.replace("x", ""));
+                changePlaybackSpeed(speed);
+            });
+        }
     }
+
 
     /**
      * Atburðarhandler fyrir að velja lagalista. Sá lagalisti er settur og farið í senu fyrir þann lista
@@ -205,4 +214,24 @@ public class PlayerController  {
 
         }
     }
-}
+
+    /**
+     * Stillir hraða spilunar út frá völdnu gildi
+     * @param event
+     */
+    public void setPlaybackSpeed(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String speed = menuItem.getText().replace("x", "");
+        player.setRate(Double.parseDouble(speed));
+    }
+
+    /**
+     * Stillir hraða
+     * @param speed
+     */
+    private void changePlaybackSpeed(double speed) {
+        if (player != null) {
+            player.setRate(speed);
+        }
+    }
+    }

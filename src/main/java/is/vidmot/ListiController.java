@@ -16,10 +16,7 @@ import is.vinnsla.Lagalistar;
 import is.vinnsla.Lagalisti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -45,6 +42,8 @@ public class ListiController  {
     private Button fxNotandi; // nafn notanda
     @FXML
     private Slider fxVolumeSlider;
+    @FXML
+    private MenuButton speedMenuButton; // Spilunarhraði
 
     // vinnslan
     private Lagalisti lagalisti; // lagalistinn
@@ -82,6 +81,13 @@ public class ListiController  {
                 player.setVolume(newValue.doubleValue() / 100.0); // Stilla hljóðstyrk á milli 0 og 1
             }
         });
+        for (MenuItem item : speedMenuButton.getItems()) {
+            item.setOnAction(event -> {
+                String speedText = item.getText();
+                double speed = Double.parseDouble(speedText.replace("x", ""));
+                changePlaybackSpeed(speed);
+            });
+    }
     }
 
     /**
@@ -199,6 +205,26 @@ public class ListiController  {
         veljaLag();
         // spila lag
         spilaLag();
+    }
+
+    /**
+     * Stillir hraða spilunar út frá völdnu gildi
+     * @param event
+     */
+    public void setPlaybackSpeed(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String speed = menuItem.getText().replace("x", "");
+        player.setRate(Double.parseDouble(speed));
+    }
+
+    /**
+     * Stillir hraða
+     * @param speed
+     */
+    private void changePlaybackSpeed(double speed) {
+        if (player != null) {
+            player.setRate(speed);
+        }
     }
 }
 
