@@ -17,7 +17,7 @@
          <children>
             <HBox prefHeight="330.0" prefWidth="300.0">
                <children>
-                  <ListView fx:id="fxSongView" prefHeight="200.0" prefWidth="200.0">
+                  <ListView fx:id="fxSongView" onMouseClicked="#onVeljaSample" prefHeight="200.0" prefWidth="200.0">
                      <HBox.margin>
                         <Insets bottom="10.0" left="50.0" top="60.0" />
                      </HBox.margin>
@@ -76,7 +76,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="35.0" prefWidth="600.0">
                <children>
-                  <ProgressBar fx:id="fxProgressBar" prefHeight="20.0" prefWidth="500.0" progress="0.0" />
+                  <ProgressBar fx:id="fxProgresssBar" prefHeight="20.0" prefWidth="500.0" progress="0.0" />
                </children>
             </VBox>
             <HBox prefHeight="35.0" prefWidth="600.0">

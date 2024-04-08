@@ -55,7 +55,7 @@ public class PlayerController  {
     // viðmótshlutir
     public ImageView repeatView; // mynd fyrir repeat takkann
     public ListView fxSongView; // Sýna öll lögin
-    public ProgressBar fxProgressBar;
+    public ProgressBar fxProgresssBar;
     public ImageView fxPlayPauseView;
     @FXML
     protected Button fxAskrifandi;
@@ -96,6 +96,7 @@ public class PlayerController  {
         ObservableList<String> songList = FXCollections.observableArrayList(mp3Files);
 
         fxSongView.setItems(songList);
+        fxSongView.setOnMouseClicked(this::onVeljaSample);
     }
 
     /**
@@ -159,5 +160,35 @@ public class PlayerController  {
     private void setjaMynd(ImageView fxImageView, String nafnMynd) {
         System.out.println ("nafn á mynd "+nafnMynd);
         fxImageView.setImage(new Image(getClass().getResource(nafnMynd).toExternalForm()));
+    }
+
+    /**
+     * Bregðas við músaatriði og spila sample
+     * @param mouseEvent
+     */
+    @FXML
+    protected void onVeljaSample(MouseEvent mouseEvent) {
+        String validLag = (String) fxSongView.getSelectionModel().getSelectedItem();
+
+        if (validLag != null) {
+            String mediaPath = "src/main/resources/is/vidmot/media/" + validLag;
+
+            Media media = new Media(new File(mediaPath).toURI().toString());
+
+            if (player != null) {
+                player.stop();
+            }
+
+            player = new MediaPlayer(media);
+            player.play();
+
+            player.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+                Duration duration = player.getMedia().getDuration();
+                double progress = newValue.toSeconds() / duration.toSeconds();
+                fxProgresssBar.setProgress(progress);
+            });
+
+
+        }
     }
 }
