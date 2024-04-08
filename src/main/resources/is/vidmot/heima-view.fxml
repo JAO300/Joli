@@ -141,7 +141,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="210.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Slider />
+                        <Slider fx:id="fxVolumeSlider" />
                      </children>
                      <opaqueInsets>
                         <Insets />

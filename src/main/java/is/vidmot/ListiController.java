@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,16 +27,12 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.util.Objects;
-
 
 public class ListiController  {
 
     // fastar
     private final String PAUSE = "images/pause2.png";
     private final String PlAY = "images/play-button.png";
-    private final String REPEATOFF = "images/repeatOff.png";
-    private final String REPEATON = "images/repeatOn.png";
 
     // viðmótshlutir
     @FXML
@@ -47,17 +44,12 @@ public class ListiController  {
     @FXML
     private Button fxNotandi; // nafn notanda
     @FXML
-    public ImageView repeatView; // mynd á repeat takka
+    private Slider fxVolumeSlider;
 
     // vinnslan
     private Lagalisti lagalisti; // lagalistinn
     private MediaPlayer player; // ein player breyta per forritið
     private Lag validLag;       // núverandi valið lag
-
-    Boolean repeatFlag = false;
-
-
-
 
     /**
      * Frumstillir lagalistann og tengir hann við ListView viðmótshlut
@@ -77,12 +69,19 @@ public class ListiController  {
         // setur upp player
         setjaPlayer();
         // setur nafn notenda
-        if (Objects.equals(PlayerController.getNotandi(), "")){
-            fxNotandi.setVisible(false);
-        }else {
-            fxNotandi.setText(PlayerController.getNotandi());
+        fxNotandi.setText(PlayerController.getNotandi());
+
+        // Setur upphafsstöðu slider í 50%
+        fxVolumeSlider.setValue(50.0);
+        if (player != null) {
+            player.setVolume(0.5); // Setur hljóðstyrk í 50%
         }
 
+        fxVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (player != null) {
+                player.setVolume(newValue.doubleValue() / 100.0); // Stilla hljóðstyrk á milli 0 og 1
+            }
+        });
     }
 
     /**
@@ -134,21 +133,6 @@ public class ListiController  {
     }
 
     /**
-     * Lætur sama lagið spilast aftur og aftur
-     * @param actionEvent
-     */
-    public void onRepeat(ActionEvent actionEvent) {
-
-        if (repeatFlag){
-            setjaMynd(repeatView, REPEATOFF); // Breytur um mynd á takkanum
-        }else {
-            setjaMynd(repeatView, REPEATON); // Breytir um mynd á takkanum
-        }
-
-        repeatFlag = !repeatFlag; // Breytir um boolean gildi svo hægt sé að breyta á milli kveikt eða slökkt
-    }
-
-    /**
      * Lætur laga lista vita hvert valda lagið er. Uppfærir myndina fyrir lagið.
      */
     private void veljaLag() {
@@ -163,6 +147,7 @@ public class ListiController  {
      */
 
     private void spilaLag() {
+        /*setjaMynd(fxPlayPauseView, PAUSE);*/
         // Búa til nýjan player
         setjaPlayer();
         // setja spilun í gang
@@ -206,24 +191,14 @@ public class ListiController  {
      * Næsta lag er spilað. Kallað á þessa aðferð þegar fyrra lag á listanum endar
      */
     private void naestaLag() {
-        if (repeatFlag) {
-            // velja lag
-            veljaLag();
-            // spila lag
-            spilaLag();
-        }else {
-            // setja valið lag sem næsta lag á núverandi lagalista
-            lagalisti.naesti();
-            // uppfæra ListView til samræmis, þ.e. að næsta lag sé valið
-            fxListView.getSelectionModel().selectIndices(lagalisti.getIndex());
-            // velja lag
-            veljaLag();
-            // spila lag
-            spilaLag();
-        }
-
-
-
+        // setja valið lag sem næsta lag á núverandi lagalista
+         lagalisti.naesti();
+        // uppfæra ListView til samræmis, þ.e. að næsta lag sé valið
+        fxListView.getSelectionModel().selectIndices(lagalisti.getIndex());
+        // velja lag
+        veljaLag();
+        // spila lag
+        spilaLag();
     }
 }
 
