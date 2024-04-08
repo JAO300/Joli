@@ -239,6 +239,10 @@ public class ListiController  {
         repeatFlag = !repeatFlag; // Breytir um boolean gildi svo hægt sé að breyta á milli kveikt eða slökkt
     }
 
+
+    public void onShuffle(ActionEvent actionEvent) {
+    }
+
     /**
      * Stillir hraða spilunar út frá völdnu gildi
      * @param event
@@ -257,9 +261,6 @@ public class ListiController  {
         if (player != null) {
             player.setRate(speed);
         }
-    }
-
-    public void onShuffle(ActionEvent actionEvent) {
     }
 }
 

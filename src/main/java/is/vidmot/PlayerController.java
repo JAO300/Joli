@@ -71,6 +71,7 @@ public class PlayerController  {
     private MenuButton speedMenuButton; // Spilunarhraði
     Boolean repeatFlag = false; // Boolean gildi til að sjá hvort kveikt sé á repeat
 
+
     Boolean shuffleFlag = false; // Boolean gildi til að sjá hvort kveikt sé á shuffle
 
     @FXML
@@ -226,7 +227,6 @@ public class PlayerController  {
     }
 
     /**
-<<<<<<< HEAD
      * Spilar / pásar lagið og breytir um mynd á takkanum samkvæmt því
      * @param actionEvent
      */
@@ -304,6 +304,7 @@ public class PlayerController  {
             player.setRate(speed);
         }
     }
+
 
     public void onShuffle(ActionEvent actionEvent) {
         if (shuffleFlag){

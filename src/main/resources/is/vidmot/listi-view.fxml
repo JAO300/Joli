@@ -101,6 +101,7 @@
                               <ImageView fx:id="fxShuffleBtn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/shuffleOff.png" />
+                                    <Image url="@images/shuffleOn.png" />
                                  </image>
                               </ImageView>
                            </graphic>
