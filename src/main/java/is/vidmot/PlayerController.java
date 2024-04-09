@@ -379,7 +379,7 @@ public class PlayerController  {
     private Pair<String, List<String>> showSampleSelectionDialog() {
         Dialog<Pair<String, List<String>>> dialog = new Dialog<>();
         dialog.setTitle("Velja sýnishorn og nafn lista");
-        dialog.setHeaderText("Veldu sýnishorn og sláðu inn nafn til að búa til nýjan listi:");
+        dialog.setHeaderText("Veldu lag og sláðu inn nafn nýja listans:");
 
         // Búa til ListView til að sýna samples
         ListView<String> listView = new ListView<>();
@@ -407,7 +407,6 @@ public class PlayerController  {
         GridPane gridPane = new GridPane();
         gridPane.add(new Label("Nafn lista:"), 0, 0);
         gridPane.add(listNameTextField, 1, 0);
-        gridPane.add(new Label("Veldu sýnishorn:"), 0, 1);
         gridPane.add(listView, 1, 1);
 
         dialog.getDialogPane().setContent(gridPane);
