@@ -24,6 +24,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -233,14 +236,27 @@ public class ListiController {
             // spila lag
             spilaLag();
         } else {
-            // setja valið lag sem næsta lag á núverandi lagalista
-            lagalisti.naesti();
-            // uppfæra ListView til samræmis, þ.e. að næsta lag sé valið
-            fxListView.getSelectionModel().selectIndices(lagalisti.getIndex());
-            // velja lag
-            veljaLag();
-            // spila lag
-            spilaLag();
+            if (shuffleFlag){
+                int randomIndex = (int) (Math.random() * fxListView.getItems().size());
+                if (randomIndex == fxListView.getSelectionModel().getSelectedIndex()){
+                    randomIndex = randomIndex + 2;
+                }
+                fxListView.getSelectionModel().select(randomIndex);
+                veljaLag();
+                spilaLag();
+                System.out.print(fxListView.getSelectionModel().getSelectedItem());
+            } else {
+                // setja valið lag sem næsta lag á núverandi lagalista
+                lagalisti.naesti();
+                // uppfæra ListView til samræmis, þ.e. að næsta lag sé valið
+                fxListView.getSelectionModel().selectIndices(lagalisti.getIndex());
+                // velja lag
+                veljaLag();
+                // spila lag
+                spilaLag();
+            }
+
+
         }
         player.setRate(currentPlaybackSpeed); //playback hraði
     }

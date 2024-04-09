@@ -34,10 +34,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class PlayerController  {
 
@@ -82,6 +79,8 @@ public class PlayerController  {
 
     // breyta til að halda um playbackhraðan
     private double currentPlaybackSpeed = 1.0;
+
+    private List<String> originalSongList = new ArrayList<>();
 
 
     // frumstilling eftir að hlutur hefur verið smíðaður og .fxml skrá lesin
@@ -265,12 +264,20 @@ public class PlayerController  {
             String validLag = (String) fxSongView.getSelectionModel().getSelectedItem();
             spilaLag(validLag);
         }else {
-            int currentIndex = fxSongView.getSelectionModel().getSelectedIndex();
+            if (shuffleFlag){
+                int randomIndex = (int) (Math.random() * fxSongView.getItems().size());
+                if (randomIndex == fxSongView.getSelectionModel().getSelectedIndex()){
+                    randomIndex = randomIndex + 2;
+                }
+                fxSongView.getSelectionModel().select(randomIndex);
+            } else {
+                int currentIndex = fxSongView.getSelectionModel().getSelectedIndex();
 
-            // Select the next song in the list (or loop back to the beginning if at the end)
-            int nextIndex = (currentIndex + 1) % fxSongView.getItems().size();
-            fxSongView.getSelectionModel().select(nextIndex);
-            String naesta = (String) fxSongView.getItems().get(nextIndex);
+                // Select the next song in the list (or loop back to the beginning if at the end)
+                int nextIndex = (currentIndex + 1) % fxSongView.getItems().size();
+                fxSongView.getSelectionModel().select(nextIndex);
+            }
+            String naesta = (String) fxSongView.getSelectionModel().getSelectedItem();
             spilaLag(naesta);
         }
         player.setRate(currentPlaybackSpeed); //playback hraði
@@ -325,13 +332,28 @@ public class PlayerController  {
 
 
     public void onShuffle(ActionEvent actionEvent) {
-    if (shuffleFlag){
-        setjaMynd(fxShuffleBtn, SHUFFLEOFF);
-    }else {
-        setjaMynd(fxShuffleBtn, SHUFFLEON);
+        if (shuffleFlag) {
+            setjaMynd(fxShuffleBtn, SHUFFLEOFF);
+        } else {
+            setjaMynd(fxShuffleBtn, SHUFFLEON);
+        }
+
+
+        shuffleFlag = !shuffleFlag;
+
+        if (shuffleFlag) {
+            shuffleSongs();
+        }
     }
 
-    shuffleFlag = !shuffleFlag;
-}
+    private void shuffleSongs() {
+        List<String> shuffledSongs = new ArrayList<>(originalSongList);
+        Collections.shuffle(shuffledSongs);
+    }
+
+    private void initializeOriginalSongList() {
+        originalSongList.addAll(fxSongView.getItems());
+    }
+
 }
 
