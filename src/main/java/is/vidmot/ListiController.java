@@ -27,7 +27,7 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 
-public class ListiController  {
+public class ListiController {
 
     // fastar
     private final String PAUSE = "images/pause2.png";
@@ -62,6 +62,9 @@ public class ListiController  {
     Boolean repeatFlag = false; // Boolean gildi til að sjá hvort kveikt sé á repeat
     Boolean shuffleFlag = false; // Boolean gildi til að sjá hvort kveikt sé á shuffle
 
+    // breyta til að halda um playbackhraðan
+    private double currentPlaybackSpeed = 1.0;
+
     /**
      * Frumstillir lagalistann og tengir hann við ListView viðmótshlut
      */
@@ -80,9 +83,9 @@ public class ListiController  {
         // setur upp player
         setjaPlayer();
         // setur nafn notenda og tekur burt takka ef engin er skráður inn
-        if (Objects.equals(PlayerController.getNotandi(), "")){
+        if (Objects.equals(PlayerController.getNotandi(), "")) {
             fxNotandi.setVisible(false);
-        }else{
+        } else {
             fxNotandi.setText(PlayerController.getNotandi());
         }
 
@@ -104,7 +107,7 @@ public class ListiController  {
                 double speed = Double.parseDouble(speedText.replace("x", ""));
                 changePlaybackSpeed(speed);
             });
-    }
+        }
     }
 
     /**
@@ -185,7 +188,7 @@ public class ListiController  {
      */
 
     private void setjaMynd(ImageView fxImageView, String nafnMynd) {
-        System.out.println ("nafn á mynd "+nafnMynd);
+        System.out.println("nafn á mynd " + nafnMynd);
         fxImageView.setImage(new Image(getClass().getResource(nafnMynd).toExternalForm()));
     }
 
@@ -214,12 +217,12 @@ public class ListiController  {
      * Næsta lag er spilað. Kallað á þessa aðferð þegar fyrra lag á listanum endar
      */
     private void naestaLag() {
-        if (repeatFlag){
+        if (repeatFlag) {
             // velja lag
             veljaLag();
             // spila lag
             spilaLag();
-        }else{
+        } else {
             // setja valið lag sem næsta lag á núverandi lagalista
             lagalisti.naesti();
             // uppfæra ListView til samræmis, þ.e. að næsta lag sé valið
@@ -229,21 +232,33 @@ public class ListiController  {
             // spila lag
             spilaLag();
         }
-
+        player.setRate(currentPlaybackSpeed); //playback hraði
     }
 
     public void onRepeat(ActionEvent actionEvent) {
-        if (repeatFlag){
+        if (repeatFlag) {
             setjaMynd(repeatView, REPEATOFF); // Breytur um mynd á takkanum
-        }else {
-            setjaMynd(repeatView, REPEATON); // Breytir um mynd á takkanum
+        } else {
+            setjaMynd(repeatView, REPEATON); // // Breytir um mynd á takkanum
         }
 
-        repeatFlag = !repeatFlag; // Breytir um boolean gildi svo hægt sé að breyta á milli kveikt eða slökkt
+        repeatFlag = !repeatFlag; // // Breytir um mynd á takkanum
+
+        if (player != null && currentPlaybackSpeed != 0) {
+            player.setRate(currentPlaybackSpeed); // playback hraði
+        } else {
+            System.err.println("Player is null or currentPlaybackSpeed is 0");
+        }
+    }
+
+
+    public void onShuffle(ActionEvent actionEvent) {
+
     }
 
     /**
      * Stillir hraða spilunar út frá völdnu gildi
+     *
      * @param event
      */
     public void setPlaybackSpeed(ActionEvent event) {
@@ -254,13 +269,16 @@ public class ListiController  {
 
     /**
      * Stillir hraða
+     *
      * @param speed
      */
     private void changePlaybackSpeed(double speed) {
         if (player != null) {
             player.setRate(speed);
+            currentPlaybackSpeed = speed; //uppfærir breytuna
         }
     }
+<<<<<<< HEAD
 
     public void onShuffle(ActionEvent actionEvent) {
         if (shuffleFlag){
@@ -271,6 +289,8 @@ public class ListiController  {
 
         shuffleFlag = !shuffleFlag;
     }
+=======
+>>>>>>> 83a257b9cb66a8e64cfee2d44da0ddbcfe296202
 }
 
 

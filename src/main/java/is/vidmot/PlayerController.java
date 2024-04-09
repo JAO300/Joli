@@ -70,6 +70,11 @@ public class PlayerController  {
     @FXML
     private MenuButton speedMenuButton; // Spilunarhraði
     Boolean repeatFlag = false; // Boolean gildi til að sjá hvort kveikt sé á repeat
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 83a257b9cb66a8e64cfee2d44da0ddbcfe296202
     Boolean shuffleFlag = false; // Boolean gildi til að sjá hvort kveikt sé á shuffle
 
     @FXML
@@ -78,6 +83,9 @@ public class PlayerController  {
     // vinnsla
     @FXML
     private MediaPlayer player; // ein player breyta per forritið
+
+    // breyta til að halda um playbackhraðan
+    private double currentPlaybackSpeed = 1.0;
 
 
     // frumstilling eftir að hlutur hefur verið smíðaður og .fxml skrá lesin
@@ -178,6 +186,7 @@ public class PlayerController  {
         }
 
         repeatFlag = !repeatFlag; // Breytir um boolean gildi svo hægt sé að breyta á milli kveikt eða slökkt
+        player.setRate(currentPlaybackSpeed); //playback hraði
     }
 
     /**
@@ -220,12 +229,11 @@ public class PlayerController  {
                 fxProgresssBar.setProgress(progress);
             });
 
-
         }
+        player.setRate(currentPlaybackSpeed); //playback hraði
     }
 
     /**
-<<<<<<< HEAD
      * Spilar / pásar lagið og breytir um mynd á takkanum samkvæmt því
      * @param actionEvent
      */
@@ -258,6 +266,7 @@ public class PlayerController  {
             String naesta = (String) fxSongView.getItems().get(nextIndex);
             spilaLag(naesta);
         }
+        player.setRate(currentPlaybackSpeed); //playback hraði
 
     }
 
@@ -285,6 +294,7 @@ public class PlayerController  {
 
 
     /**
+>>>>>>> main
      * Stillir hraða spilunar út frá völdnu gildi
      * @param event
      */
@@ -301,17 +311,20 @@ public class PlayerController  {
     private void changePlaybackSpeed(double speed) {
         if (player != null) {
             player.setRate(speed);
+            currentPlaybackSpeed = speed; //uppfærir breytuna
         }
     }
+
+
 
     public void onShuffle(ActionEvent actionEvent) {
-        if (shuffleFlag){
-            setjaMynd(fxShuffleBtn, SHUFFLEOFF);
-        }else {
-            setjaMynd(fxShuffleBtn, SHUFFLEON);
-        }
-
-        shuffleFlag = !shuffleFlag;
+    if (shuffleFlag){
+        setjaMynd(fxShuffleBtn, SHUFFLEOFF);
+    }else {
+        setjaMynd(fxShuffleBtn, SHUFFLEON);
     }
+
+    shuffleFlag = !shuffleFlag;
+}
 }
 
