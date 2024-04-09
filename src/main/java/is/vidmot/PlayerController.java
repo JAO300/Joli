@@ -76,6 +76,9 @@ public class PlayerController  {
     @FXML
     private MediaPlayer player; // ein player breyta per forritið
 
+    // breyta til að halda um playbackhraðan
+    private double currentPlaybackSpeed = 1.0;
+
 
     // frumstilling eftir að hlutur hefur verið smíðaður og .fxml skrá lesin
     public void initialize() {
@@ -175,6 +178,7 @@ public class PlayerController  {
         }
 
         repeatFlag = !repeatFlag; // Breytir um boolean gildi svo hægt sé að breyta á milli kveikt eða slökkt
+        player.setRate(currentPlaybackSpeed); //playback hraði
     }
 
     /**
@@ -217,14 +221,11 @@ public class PlayerController  {
                 fxProgresssBar.setProgress(progress);
             });
 
-
         }
+        player.setRate(currentPlaybackSpeed); //playback hraði
     }
 
     /**
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
      * Spilar / pásar lagið og breytir um mynd á takkanum samkvæmt því
      * @param actionEvent
      */
@@ -257,6 +258,7 @@ public class PlayerController  {
             String naesta = (String) fxSongView.getItems().get(nextIndex);
             spilaLag(naesta);
         }
+        player.setRate(currentPlaybackSpeed); //playback hraði
 
     }
 
@@ -301,6 +303,7 @@ public class PlayerController  {
     private void changePlaybackSpeed(double speed) {
         if (player != null) {
             player.setRate(speed);
+            currentPlaybackSpeed = speed; //uppfærir breytuna
         }
     }
     }

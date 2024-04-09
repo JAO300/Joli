@@ -57,6 +57,9 @@ public class ListiController {
     private Lag validLag;       // núverandi valið lag
     Boolean repeatFlag = false;
 
+    // breyta til að halda um playbackhraðan
+    private double currentPlaybackSpeed = 1.0;
+
     /**
      * Frumstillir lagalistann og tengir hann við ListView viðmótshlut
      */
@@ -224,17 +227,23 @@ public class ListiController {
             // spila lag
             spilaLag();
         }
-
+        player.setRate(currentPlaybackSpeed); //playback hraði
     }
 
     public void onRepeat(ActionEvent actionEvent) {
         if (repeatFlag) {
             setjaMynd(repeatView, REPEATOFF); // Breytur um mynd á takkanum
         } else {
-            setjaMynd(repeatView, REPEATON); // Breytir um mynd á takkanum
+            setjaMynd(repeatView, REPEATON); // // Breytir um mynd á takkanum
         }
 
-        repeatFlag = !repeatFlag; // Breytir um boolean gildi svo hægt sé að breyta á milli kveikt eða slökkt
+        repeatFlag = !repeatFlag; // // Breytir um mynd á takkanum
+
+        if (player != null && currentPlaybackSpeed != 0) {
+            player.setRate(currentPlaybackSpeed); // playback hraði
+        } else {
+            System.err.println("Player is null or currentPlaybackSpeed is 0");
+        }
     }
 
     /**
@@ -256,6 +265,7 @@ public class ListiController {
     private void changePlaybackSpeed(double speed) {
         if (player != null) {
             player.setRate(speed);
+            currentPlaybackSpeed = speed; //uppfærir breytuna
         }
     }
 }
