@@ -51,9 +51,13 @@ public class PlayerController  {
 
 
     // viðmótshlutir
+    @FXML
     public ImageView repeatView; // mynd fyrir repeat takkann
+    @FXML
     public ListView fxSongView; // Sýna öll lögin
+    @FXML
     public ProgressBar fxProgresssBar;
+    @FXML
     public ImageView fxPlayPauseView;
     @FXML
     protected Button fxAskrifandi;
@@ -69,10 +73,8 @@ public class PlayerController  {
     private ListView<String> fxListView;
 
     // vinnsla
-
+    @FXML
     private MediaPlayer player; // ein player breyta per forritið
-    private Lag validLag;       // núverandi valið lag
-    private Lagalisti lagalisti; // lagalistinn
 
 
     // frumstilling eftir að hlutur hefur verið smíðaður og .fxml skrá lesin
@@ -134,6 +136,8 @@ public class PlayerController  {
             System.out.println("Valinn listi: " + selectedItem);
         // skiptum yfir í LAGALISTI view
         ViewSwitcher.switchTo(View.LAGALISTI, false);
+        //Stoppa player ef lag er í gangi
+        player.stop();
     }
     /**
      * Loggar áskrifanda inn
@@ -205,6 +209,8 @@ public class PlayerController  {
             player = new MediaPlayer(media);
             player.play();
 
+            player.setOnEndOfMedia(this::naestaLag);
+
             player.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
                 Duration duration = player.getMedia().getDuration();
                 double progress = newValue.toSeconds() / duration.toSeconds();
@@ -216,6 +222,69 @@ public class PlayerController  {
     }
 
     /**
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+     * Spilar / pásar lagið og breytir um mynd á takkanum samkvæmt því
+     * @param actionEvent
+     */
+    @FXML
+    protected void onPlayPause(ActionEvent actionEvent) {
+        // ef player-inn er spilandi
+        if (player.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+            setjaMynd(fxPlayPauseView, PlAY);   // uppfærðu myndina með play (ör)
+            player.pause();                     // pásaðu spilarann
+        } else if (player.getStatus().equals(MediaPlayer.Status.PAUSED)) {
+            setjaMynd(fxPlayPauseView, PAUSE);
+            player.play();                      // haltu áfram að spila
+        }
+    }
+
+    /**
+     * Spilar næsta lag
+     */
+    private void naestaLag(){
+        // Get the index of the currently playing song
+        if (repeatFlag){
+            String validLag = (String) fxSongView.getSelectionModel().getSelectedItem();
+            spilaLag(validLag);
+        }else {
+            int currentIndex = fxSongView.getSelectionModel().getSelectedIndex();
+
+            // Select the next song in the list (or loop back to the beginning if at the end)
+            int nextIndex = (currentIndex + 1) % fxSongView.getItems().size();
+            fxSongView.getSelectionModel().select(nextIndex);
+            String naesta = (String) fxSongView.getItems().get(nextIndex);
+            spilaLag(naesta);
+        }
+
+    }
+
+    /**
+     * Spilar lagið sem er valið
+     * @param nafn nafnið á laginu
+     */
+    private void spilaLag(String nafn){
+        String mediaPath = "src/main/resources/is/vidmot/media/" + nafn;
+
+        Media media = new Media(new File(mediaPath).toURI().toString());
+        player.stop();
+        player = new MediaPlayer(media);
+        player.play();
+
+        player.setOnEndOfMedia(this::naestaLag);
+
+        player.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            Duration duration = player.getMedia().getDuration();
+            double progress = newValue.toSeconds() / duration.toSeconds();
+            fxProgresssBar.setProgress(progress);
+        });
+
+    }
+
+
+    /**
+>>>>>>> main
      * Stillir hraða spilunar út frá völdnu gildi
      * @param event
      */

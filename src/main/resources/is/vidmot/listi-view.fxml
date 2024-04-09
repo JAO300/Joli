@@ -80,11 +80,11 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="8.0">
                      <children>
-                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onRepeat" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
                            <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="repeatView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/repeatOn.png" />
+                                    <Image url="@images/repeatOff.png" />
                                  </image>
                               </ImageView>
                            </graphic>

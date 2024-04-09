@@ -24,16 +24,22 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+import java.util.Objects;
 
-public class ListiController  {
+
+public class ListiController {
 
     // fastar
     private final String PAUSE = "images/pause2.png";
     private final String PlAY = "images/play-button.png";
+    private final String REPEATOFF = "images/repeatOff.png";
+    private final String REPEATON = "images/repeatOn.png";
 
     // viðmótshlutir
     @FXML
     public ProgressBar fxProgressBar;   // progress bar fyrir spilun á lagi
+    @FXML
+    public ImageView repeatView; //Mynd fyrir repeat takka
     @FXML
     protected ImageView fxPlayPauseView; // mynd fyrir play/pause hnappinn
     @FXML
@@ -49,6 +55,7 @@ public class ListiController  {
     private Lagalisti lagalisti; // lagalistinn
     private MediaPlayer player; // ein player breyta per forritið
     private Lag validLag;       // núverandi valið lag
+    Boolean repeatFlag = false;
 
     /**
      * Frumstillir lagalistann og tengir hann við ListView viðmótshlut
@@ -67,8 +74,13 @@ public class ListiController  {
         veljaLag();
         // setur upp player
         setjaPlayer();
-        // setur nafn notenda
-        fxNotandi.setText(PlayerController.getNotandi());
+        // setur nafn notenda og tekur burt takka ef engin er skráður inn
+        if (Objects.equals(PlayerController.getNotandi(), "")) {
+            fxNotandi.setVisible(false);
+        } else {
+            fxNotandi.setText(PlayerController.getNotandi());
+        }
+
 
         // Setur upphafsstöðu slider í 50%
         fxVolumeSlider.setValue(50.0);
@@ -87,7 +99,7 @@ public class ListiController  {
                 double speed = Double.parseDouble(speedText.replace("x", ""));
                 changePlaybackSpeed(speed);
             });
-    }
+        }
     }
 
     /**
@@ -168,7 +180,7 @@ public class ListiController  {
      */
 
     private void setjaMynd(ImageView fxImageView, String nafnMynd) {
-        System.out.println ("nafn á mynd "+nafnMynd);
+        System.out.println("nafn á mynd " + nafnMynd);
         fxImageView.setImage(new Image(getClass().getResource(nafnMynd).toExternalForm()));
     }
 
@@ -197,18 +209,37 @@ public class ListiController  {
      * Næsta lag er spilað. Kallað á þessa aðferð þegar fyrra lag á listanum endar
      */
     private void naestaLag() {
-        // setja valið lag sem næsta lag á núverandi lagalista
-         lagalisti.naesti();
-        // uppfæra ListView til samræmis, þ.e. að næsta lag sé valið
-        fxListView.getSelectionModel().selectIndices(lagalisti.getIndex());
-        // velja lag
-        veljaLag();
-        // spila lag
-        spilaLag();
+        if (repeatFlag) {
+            // velja lag
+            veljaLag();
+            // spila lag
+            spilaLag();
+        } else {
+            // setja valið lag sem næsta lag á núverandi lagalista
+            lagalisti.naesti();
+            // uppfæra ListView til samræmis, þ.e. að næsta lag sé valið
+            fxListView.getSelectionModel().selectIndices(lagalisti.getIndex());
+            // velja lag
+            veljaLag();
+            // spila lag
+            spilaLag();
+        }
+
+    }
+
+    public void onRepeat(ActionEvent actionEvent) {
+        if (repeatFlag) {
+            setjaMynd(repeatView, REPEATOFF); // Breytur um mynd á takkanum
+        } else {
+            setjaMynd(repeatView, REPEATON); // Breytir um mynd á takkanum
+        }
+
+        repeatFlag = !repeatFlag; // Breytir um boolean gildi svo hægt sé að breyta á milli kveikt eða slökkt
     }
 
     /**
      * Stillir hraða spilunar út frá völdnu gildi
+     *
      * @param event
      */
     public void setPlaybackSpeed(ActionEvent event) {
@@ -219,6 +250,7 @@ public class ListiController  {
 
     /**
      * Stillir hraða
+     *
      * @param speed
      */
     private void changePlaybackSpeed(double speed) {
