@@ -378,7 +378,7 @@ public class PlayerController  {
 
     private Pair<String, List<String>> showSampleSelectionDialog() {
         Dialog<Pair<String, List<String>>> dialog = new Dialog<>();
-        dialog.setTitle("Velja sýnishorn og nafn lista");
+        dialog.setTitle("Velja lög og nafn lista");
         dialog.setHeaderText("Veldu lag og sláðu inn nafn nýja listans:");
 
         // Búa til ListView til að sýna samples
