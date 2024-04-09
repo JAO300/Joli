@@ -34,6 +34,8 @@ public class ListiController  {
     private final String PlAY = "images/play-button.png";
     private final String REPEATOFF = "images/repeatOff.png";
     private final String REPEATON = "images/repeatOn.png";
+    private static final String SHUFFLEON = "images/shuffleOn.png";
+    private static final String SHUFFLEOFF = "images/shuffleOff.png";
 
     // viðmótshlutir
     @FXML
@@ -57,7 +59,8 @@ public class ListiController  {
     private Lagalisti lagalisti; // lagalistinn
     private MediaPlayer player; // ein player breyta per forritið
     private Lag validLag;       // núverandi valið lag
-    Boolean repeatFlag = false;
+    Boolean repeatFlag = false; // Boolean gildi til að sjá hvort kveikt sé á repeat
+    Boolean shuffleFlag = false; // Boolean gildi til að sjá hvort kveikt sé á shuffle
 
     /**
      * Frumstillir lagalistann og tengir hann við ListView viðmótshlut
@@ -260,6 +263,13 @@ public class ListiController  {
     }
 
     public void onShuffle(ActionEvent actionEvent) {
+        if (shuffleFlag){
+            setjaMynd(fxShuffleBtn, SHUFFLEOFF);
+        }else {
+            setjaMynd(fxShuffleBtn, SHUFFLEON);
+        }
+
+        shuffleFlag = !shuffleFlag;
     }
 }
 
