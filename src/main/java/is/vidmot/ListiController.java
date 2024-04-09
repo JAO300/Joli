@@ -41,6 +41,8 @@ public class ListiController {
     @FXML
     public ImageView repeatView; //Mynd fyrir repeat takka
     @FXML
+    public ImageView fxShuffleBtn; // Mynd fyrir shuffle takka
+    @FXML
     protected ImageView fxPlayPauseView; // mynd fyrir play/pause hnappinn
     @FXML
     protected ListView<Lag> fxListView; // lagalistinn
@@ -244,6 +246,11 @@ public class ListiController {
         } else {
             System.err.println("Player is null or currentPlaybackSpeed is 0");
         }
+    }
+
+
+    public void onShuffle(ActionEvent actionEvent) {
+
     }
 
     /**

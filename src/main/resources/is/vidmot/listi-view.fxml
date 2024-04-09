@@ -96,11 +96,12 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="50.0">
                      <children>
-                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onShuffle" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
                            <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="fxShuffleBtn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/shuffle.png" />
+                                    <Image url="@images/shuffleOff.png" />
+                                    <Image url="@images/shuffleOn.png" />
                                  </image>
                               </ImageView>
                            </graphic>

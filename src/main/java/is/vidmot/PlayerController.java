@@ -48,6 +48,8 @@ public class PlayerController  {
     private final String PlAY = "images/play2.png";
     private final String PAUSE = "images/pause2.png";
     private static String Notandi = "";
+    private static final String SHUFFLEON = "images/shuffleOn.png";
+    private static final String SHUFFLEOFF = "images/shuffleOff.png";
 
 
     // viðmótshlutir
@@ -60,14 +62,17 @@ public class PlayerController  {
     @FXML
     public ImageView fxPlayPauseView;
     @FXML
+    public ImageView fxShuffleBtn;
+    @FXML
     protected Button fxAskrifandi;
     @FXML
     private Slider fxVolumeSlider;
     @FXML
     private MenuButton speedMenuButton; // Spilunarhraði
+    Boolean repeatFlag = false; // Boolean gildi til að sjá hvort kveikt sé á repeat
 
-    // Repeat takki
-    Boolean repeatFlag = false;
+
+    Boolean shuffleFlag = false; // Boolean gildi til að sjá hvort kveikt sé á shuffle
 
     @FXML
     private ListView<String> fxListView;
@@ -306,4 +311,17 @@ public class PlayerController  {
             currentPlaybackSpeed = speed; //uppfærir breytuna
         }
     }
+
+
+
+    public void onShuffle(ActionEvent actionEvent) {
+    if (shuffleFlag){
+        setjaMynd(fxShuffleBtn, SHUFFLEOFF);
+    }else {
+        setjaMynd(fxShuffleBtn, SHUFFLEON);
     }
+
+    shuffleFlag = !shuffleFlag;
+}
+}
+
