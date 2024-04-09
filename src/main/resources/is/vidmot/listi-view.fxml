@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="is.vidmot.ListiController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="is.vidmot.ListiController">
    <children>
       <VBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="400.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: grey;">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0">
                      <children>
@@ -27,16 +27,17 @@
                               <Font size="18.0" />
                            </font>
                            <VBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="10.0" top="10.0" />
                            </VBox.margin>
                         </Button>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0">
+                  <VBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" />
+                  <VBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="fxNotandi" mnemonicParsing="false" text="Skrá inn">
                            <VBox.margin>
-                              <Insets right="10.0" />
+                              <Insets right="10.0" top="10.0" />
                            </VBox.margin>
                            <font>
                               <Font size="18.0" />
@@ -47,11 +48,11 @@
                </children>
             </HBox>
          </children></VBox>
-      <VBox prefHeight="457.0" prefWidth="400.0">
+      <VBox prefHeight="457.0" prefWidth="400.0" style="-fx-background-color: grey;">
          <children>
-            <HBox alignment="CENTER" prefHeight="470.0" prefWidth="400.0">
+            <HBox alignment="CENTER" prefHeight="315.0" prefWidth="600.0">
                <children>
-                  <VBox prefHeight="476.0" prefWidth="280.0">
+                  <VBox prefHeight="476.0" prefWidth="335.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="58.0" prefWidth="400.0">
                            <children>
@@ -61,22 +62,31 @@
                                  </font>
                               </Label>
                            </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </HBox>
-                        <ListView fx:id="fxListView" onMouseClicked="#onValidLag" prefHeight="434.0" prefWidth="280.0" />
+                        <ListView fx:id="fxListView" onMouseClicked="#onValidLag" prefHeight="269.0" prefWidth="307.0">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin></ListView>
                      </children>
                   </VBox>
                </children>
             </HBox>
          </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
       </VBox>
-      <VBox alignment="CENTER" prefHeight="35.0" prefWidth="400.0">
+      <VBox alignment="CENTER" minHeight="-Infinity" prefHeight="35.0" prefWidth="600.0">
          <children>
-            <ProgressBar fx:id="fxProgressBar" prefWidth="280.0" progress="0.0" />
+            <ProgressBar fx:id="fxProgressBar" prefHeight="20.0" prefWidth="335.0" progress="0.0" />
          </children>
       </VBox>
       <HBox prefHeight="34.0" prefWidth="400.0">
          <children>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="8.0">
                      <children>
@@ -121,7 +131,7 @@
                   </HBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="201.0">
                <children>
                   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPlayPause" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
                      <graphic>
@@ -137,11 +147,14 @@
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="210.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" layoutX="210.0" layoutY="10.0" minHeight="-Infinity" prefHeight="35.0" prefWidth="200.0">
                <children>
-                  <Slider fx:id="fxVolumeSlider" prefHeight="16.0" prefWidth="75.0" />
+                  <Slider fx:id="fxVolumeSlider" prefHeight="16.0" prefWidth="66.0" />
                </children></HBox>
          </children>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
       </HBox>
    </children>
 </VBox>
