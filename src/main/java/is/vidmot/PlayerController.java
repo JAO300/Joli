@@ -50,6 +50,7 @@ public class PlayerController  {
     private static String Notandi = "";
     private static final String SHUFFLEON = "images/shuffleOn.png";
     private static final String SHUFFLEOFF = "images/shuffleOff.png";
+    private double lastVolume = 50.0;
 
 
     // viðmótshlutir
@@ -214,6 +215,18 @@ public class PlayerController  {
             }
 
             player = new MediaPlayer(media);
+
+            // Setja volume gildi inn
+            player.setVolume(lastVolume / 100.0);
+
+            // uppfæra lastVolume breytu þegar hún breytist
+            player.volumeProperty().addListener((observable, oldValue, newValue) -> {
+                lastVolume = newValue.doubleValue() * 100.0;
+            });
+
+            // Halda volume gildinu í því sama og það var síðast í
+            fxVolumeSlider.setValue(lastVolume);
+
             player.play();
 
             player.setOnEndOfMedia(this::naestaLag);
@@ -223,7 +236,6 @@ public class PlayerController  {
                 double progress = newValue.toSeconds() / duration.toSeconds();
                 fxProgresssBar.setProgress(progress);
             });
-
         }
         player.setRate(currentPlaybackSpeed); //playback hraði
     }

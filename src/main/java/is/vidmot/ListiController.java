@@ -36,6 +36,7 @@ public class ListiController {
     private final String REPEATON = "images/repeatOn.png";
     private static final String SHUFFLEON = "images/shuffleOn.png";
     private static final String SHUFFLEOFF = "images/shuffleOff.png";
+    private double lastVolume = 50.0;
 
     // viðmótshlutir
     @FXML
@@ -65,6 +66,8 @@ public class ListiController {
     // breyta til að halda um playbackhraðan
     private double currentPlaybackSpeed = 1.0;
 
+
+
     /**
      * Frumstillir lagalistann og tengir hann við ListView viðmótshlut
      */
@@ -90,17 +93,24 @@ public class ListiController {
         }
 
 
-        // Setur upphafsstöðu slider í 50%
-        fxVolumeSlider.setValue(50.0);
+        // Set initial volume slider value
+        fxVolumeSlider.setValue(lastVolume);
+
+        // Add listener to update volume slider when volume changes
         if (player != null) {
-            player.setVolume(0.5); // Setur hljóðstyrk í 50%
+            player.volumeProperty().addListener((observable, oldValue, newValue) -> {
+                lastVolume = newValue.doubleValue() * 100.0;
+                fxVolumeSlider.setValue(lastVolume);
+            });
         }
 
+        // Volume slider listener to update player volume
         fxVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (player != null) {
-                player.setVolume(newValue.doubleValue() / 100.0); // Stilla hljóðstyrk á milli 0 og 1
+                player.setVolume(newValue.doubleValue() / 100.0);
             }
         });
+
         for (MenuItem item : speedMenuButton.getItems()) {
             item.setOnAction(event -> {
                 String speedText = item.getText();
