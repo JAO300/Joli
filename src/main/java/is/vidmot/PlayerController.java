@@ -33,11 +33,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import javafx.util.Pair;
 
 import java.util.*;
 
 public class PlayerController  {
-
+    public static ObservableList<String> selectedSongs = FXCollections.observableArrayList();
     // fastar
     public static final String ASKRIFANDI = "Áskrifandi";
     private final String REPEATOFF = "images/repeatOff.png";
@@ -308,7 +309,6 @@ public class PlayerController  {
 
 
     /**
->>>>>>> main
      * Stillir hraða spilunar út frá völdnu gildi
      * @param event
      */
@@ -332,6 +332,7 @@ public class PlayerController  {
 
 
     public void onShuffle(ActionEvent actionEvent) {
+
         if (shuffleFlag) {
             setjaMynd(fxShuffleBtn, SHUFFLEOFF);
         } else {
@@ -353,7 +354,100 @@ public class PlayerController  {
 
     private void initializeOriginalSongList() {
         originalSongList.addAll(fxSongView.getItems());
+
+        if (shuffleFlag){
+            setjaMynd(fxShuffleBtn, SHUFFLEOFF);
+        }else {
+            setjaMynd(fxShuffleBtn, SHUFFLEON);
+        }
+
+        shuffleFlag = !shuffleFlag;
     }
 
-}
+    @FXML
+    protected void onBuaTilLagalista(ActionEvent actionEvent) {
+        Pair<String, List<String>> dialogResult = showSampleSelectionDialog();
+        if (dialogResult != null && !dialogResult.getValue().isEmpty()) {
+            String listName = dialogResult.getKey();
+            List<String> selectedSamples = dialogResult.getValue();
+            createNewListWithNamedSamples(listName, selectedSamples);
+
+        }
+    }
+
+
+    private Pair<String, List<String>> showSampleSelectionDialog() {
+        Dialog<Pair<String, List<String>>> dialog = new Dialog<>();
+        dialog.setTitle("Velja sýnishorn og nafn lista");
+        dialog.setHeaderText("Veldu sýnishorn og sláðu inn nafn til að búa til nýjan listi:");
+
+        // Búa til ListView til að sýna samples
+        ListView<String> listView = new ListView<>();
+        listView.setItems(fxSongView.getItems());
+
+        // Leyfa fjölda valkosta
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        // Músclick togglar selection
+        listView.setOnMouseClicked(event -> {
+            String selectedItem = listView.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                if (listView.getSelectionModel().getSelectedItems().contains(selectedItem)) {
+                    listView.getSelectionModel().clearSelection(listView.getItems().indexOf(selectedItem));
+                } else {
+                    listView.getSelectionModel().select(selectedItem);
+                }
+            }
+        });
+
+        // Bú til textfield fyrir nafn listans
+        TextField listNameTextField = new TextField();
+        listNameTextField.setPromptText("Nafn lista");
+
+        GridPane gridPane = new GridPane();
+        gridPane.add(new Label("Nafn lista:"), 0, 0);
+        gridPane.add(listNameTextField, 1, 0);
+        gridPane.add(new Label("Veldu sýnishorn:"), 0, 1);
+        gridPane.add(listView, 1, 1);
+
+        dialog.getDialogPane().setContent(gridPane);
+
+        // button
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        // Umbreyta niðurstöðum frá dialog
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                String listName = listNameTextField.getText();
+                List<String> selectedSamples = new ArrayList<>(listView.getSelectionModel().getSelectedItems());
+                return new Pair<>(listName, selectedSamples);
+            }
+            return null;
+        });
+
+        Optional<Pair<String, List<String>>> result = dialog.showAndWait();
+        return result.orElse(null);
+    }
+
+
+    private void createNewListWithNamedSamples(String listName, List<String> samples) {
+        List<String> existingSamplesInLagalisti = new ArrayList<>();
+
+        for (String sample : samples) {
+            if (fxSongView.getItems().contains(sample)) {
+                existingSamplesInLagalisti.add(sample);
+            }
+        }
+
+        System.out.println("Chosen songs in the new list '" + listName + "':");
+        for (String chosenSong : existingSamplesInLagalisti) {
+            System.out.println(chosenSong);
+        }
+
+        // You can add more logic here if needed
+        ObservableList<String> newList = FXCollections.observableArrayList(existingSamplesInLagalisti);
+        fxListView.getItems().add(listName);
+        PlayerController.selectedSongs.addAll(existingSamplesInLagalisti);
+    }}
+
 
