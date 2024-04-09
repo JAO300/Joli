@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
@@ -98,18 +100,6 @@
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@images/playback.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </Button>
-                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: dark;">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
                                     <Image url="@images/shuffle.png" />
                                  </image>
                               </ImageView>
@@ -118,6 +108,14 @@
                               <Insets />
                            </opaqueInsets>
                         </Button>
+                        <MenuButton fx:id="speedMenuButton" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" popupSide="TOP" prefHeight="25.0" prefWidth="25.0" textFill="#e8e5e5">
+                           <items>
+                              <MenuItem onAction="#setPlaybackSpeed" text="0.5x" />
+                              <MenuItem onAction="#setPlaybackSpeed" text="1x" />
+                              <MenuItem onAction="#setPlaybackSpeed" text="1.5x" />
+                              <MenuItem onAction="#setPlaybackSpeed" text="2x" />
+                           </items>
+                        </MenuButton>
                      </children>
                   </HBox>
                </children>
