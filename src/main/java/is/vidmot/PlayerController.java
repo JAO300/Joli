@@ -70,11 +70,6 @@ public class PlayerController  {
     @FXML
     private MenuButton speedMenuButton; // Spilunarhraði
     Boolean repeatFlag = false; // Boolean gildi til að sjá hvort kveikt sé á repeat
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 83a257b9cb66a8e64cfee2d44da0ddbcfe296202
     Boolean shuffleFlag = false; // Boolean gildi til að sjá hvort kveikt sé á shuffle
 
     @FXML

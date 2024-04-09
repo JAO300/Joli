@@ -251,11 +251,6 @@ public class ListiController {
         }
     }
 
-
-    public void onShuffle(ActionEvent actionEvent) {
-
-    }
-
     /**
      * Stillir hraða spilunar út frá völdnu gildi
      *
@@ -278,7 +273,6 @@ public class ListiController {
             currentPlaybackSpeed = speed; //uppfærir breytuna
         }
     }
-<<<<<<< HEAD
 
     public void onShuffle(ActionEvent actionEvent) {
         if (shuffleFlag){
@@ -289,8 +283,6 @@ public class ListiController {
 
         shuffleFlag = !shuffleFlag;
     }
-=======
->>>>>>> 83a257b9cb66a8e64cfee2d44da0ddbcfe296202
 }
 
 
