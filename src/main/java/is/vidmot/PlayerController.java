@@ -279,8 +279,9 @@ public class PlayerController  {
         });
 
     }
-}
-=======
+
+
+    /**
      * Stillir hraða spilunar út frá völdnu gildi
      * @param event
      */
@@ -300,4 +301,4 @@ public class PlayerController  {
         }
     }
     }
->>>>>>> f503528 (playback takki tengdur)
+
