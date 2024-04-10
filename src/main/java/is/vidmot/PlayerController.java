@@ -7,6 +7,11 @@ package is.vidmot;
  *  Controller fyrir forsíðuna
  *
  *  Getur valið lagalista
+ *  Spilað / pásað lög
+ *  Repeat
+ *  Shuffle
+ *  Breytt spilunarhraða
+ *  Búið til nýjan lagalista
  *
  *****************************************************************************/
 import is.vinnsla.Askrifandi;
@@ -38,17 +43,17 @@ import javafx.util.Pair;
 import java.util.*;
 
 public class PlayerController  {
-    public static ObservableList<String> selectedSongs = FXCollections.observableArrayList();
-    // fastar
-    public static final String ASKRIFANDI = "Áskrifandi";
-    private final String REPEATOFF = "images/repeatOff.png";
-    private final String REPEATON = "images/repeatOn.png";
-    private final String PlAY = "images/play2.png";
-    private final String PAUSE = "images/pause2.png";
-    private static String Notandi = "";
-    private static final String SHUFFLEON = "images/shuffleOn.png";
-    private static final String SHUFFLEOFF = "images/shuffleOff.png";
-    private double lastVolume = 50.0;
+    // Fastar
+    public static ObservableList<String> selectedSongs = FXCollections.observableArrayList(); // Listi af lögum
+    public static final String ASKRIFANDI = "Áskrifandi"; // Slóð á mynd
+    private final String REPEATOFF = "images/repeatOff.png"; // Slóð á mynd
+    private final String REPEATON = "images/repeatOn.png"; // Slóð á mynd
+    private final String PlAY = "images/play2.png"; // Slóð á mynd
+    private final String PAUSE = "images/pause2.png"; // Slóð á mynd
+    private static String Notandi = ""; // Strengur fyrir innskráningu
+    private static final String SHUFFLEON = "images/shuffleOn.png"; // Slóð á mynd
+    private static final String SHUFFLEOFF = "images/shuffleOff.png"; // Slóð á mynd
+    private double lastVolume = 50.0; // Breyta fyrir volume slider
 
 
     // viðmótshlutir
@@ -57,31 +62,28 @@ public class PlayerController  {
     @FXML
     public ListView fxSongView; // Sýna öll lögin
     @FXML
-    public ProgressBar fxProgresssBar;
+    public ProgressBar fxProgresssBar; // Progressbar fyrir lög
     @FXML
-    public ImageView fxPlayPauseView;
+    public ImageView fxPlayPauseView; // Breyta fyrir imageview á play/pause takka
     @FXML
-    public ImageView fxShuffleBtn;
+    public ImageView fxShuffleBtn; //Breyta fyrir imageview á shuffle takka
     @FXML
-    protected Button fxAskrifandi;
+    protected Button fxAskrifandi; // Takki fyrir innskráningu
     @FXML
-    private Slider fxVolumeSlider;
+    private Slider fxVolumeSlider; // Slider til að hækka / lækka
     @FXML
     private MenuButton speedMenuButton; // Spilunarhraði
     Boolean repeatFlag = false; // Boolean gildi til að sjá hvort kveikt sé á repeat
     Boolean shuffleFlag = false; // Boolean gildi til að sjá hvort kveikt sé á shuffle
-
     @FXML
-    private ListView<String> fxListView;
+    private ListView<String> fxListView; // Breyta til að tengjast listview
 
     // vinnsla
     @FXML
     private MediaPlayer player; // ein player breyta per forritið
+    private double currentPlaybackSpeed = 1.0; // breyta til að halda um playbackhraðan
 
-    // breyta til að halda um playbackhraðan
-    private double currentPlaybackSpeed = 1.0;
-
-    private List<String> originalSongList = new ArrayList<>();
+    private List<String> originalSongList = new ArrayList<>(); // Listi af öllum lögunum
 
 
     // frumstilling eftir að hlutur hefur verið smíðaður og .fxml skrá lesin
@@ -329,8 +331,11 @@ public class PlayerController  {
         }
     }
 
-
-
+    /**
+     * Þegar ýtt er á shuffle takka. Mynd á takkanum breytist og gildi shuffleFlag breytist og segir til
+     * um hvort kveikt sé á takkanum
+     * @param actionEvent
+     */
     public void onShuffle(ActionEvent actionEvent) {
 
         if (shuffleFlag) {
@@ -347,23 +352,18 @@ public class PlayerController  {
         }
     }
 
+    /**
+     * Fall til að setja lagalista í handahófsröð / Shuffla listanum
+     */
     private void shuffleSongs() {
         List<String> shuffledSongs = new ArrayList<>(originalSongList);
         Collections.shuffle(shuffledSongs);
     }
 
-    private void initializeOriginalSongList() {
-        originalSongList.addAll(fxSongView.getItems());
-
-        if (shuffleFlag){
-            setjaMynd(fxShuffleBtn, SHUFFLEOFF);
-        }else {
-            setjaMynd(fxShuffleBtn, SHUFFLEON);
-        }
-
-        shuffleFlag = !shuffleFlag;
-    }
-
+    /**
+     * Fall sem keyrt þegar ýtt er á búa til lagalista. Setur upp dialog glugga
+     * @param actionEvent
+     */
     @FXML
     protected void onBuaTilLagalista(ActionEvent actionEvent) {
         Pair<String, List<String>> dialogResult = showSampleSelectionDialog();
@@ -375,7 +375,10 @@ public class PlayerController  {
         }
     }
 
-
+    /**
+     * Býr til nýjan lagalista. Notandi velur nafn á listanum og hvaða lög hann vill hafa í honum.
+     * @return
+     */
     private Pair<String, List<String>> showSampleSelectionDialog() {
         Dialog<Pair<String, List<String>>> dialog = new Dialog<>();
         dialog.setTitle("Velja lög og nafn lista");
@@ -427,8 +430,6 @@ public class PlayerController  {
         Optional<Pair<String, List<String>>> result = dialog.showAndWait();
         return result.orElse(null);
     }
-
-
     private void createNewListWithNamedSamples(String listName, List<String> samples) {
         List<String> existingSamplesInLagalisti = new ArrayList<>();
 

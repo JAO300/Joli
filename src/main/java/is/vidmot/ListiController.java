@@ -9,6 +9,9 @@ package is.vidmot;
  *
  *  -- valið lag
  *  -- play / pause
+ *  -- Shuffle
+ *  -- Repeat
+ *  -- Breytt spilunarhraða
  *  -- farið heim
  *****************************************************************************/
 import is.vinnsla.Lag;
@@ -33,13 +36,13 @@ import java.util.Objects;
 public class ListiController {
 
     // fastar
-    private final String PAUSE = "images/pause2.png";
-    private final String PlAY = "images/play-button.png";
-    private final String REPEATOFF = "images/repeatOff.png";
-    private final String REPEATON = "images/repeatOn.png";
-    private static final String SHUFFLEON = "images/shuffleOn.png";
-    private static final String SHUFFLEOFF = "images/shuffleOff.png";
-    private double lastVolume = 50.0;
+    private final String PAUSE = "images/pause2.png"; // Slóð á mynd
+    private final String PlAY = "images/play-button.png"; // Slóð á mynd
+    private final String REPEATOFF = "images/repeatOff.png"; // Slóð á mynd
+    private final String REPEATON = "images/repeatOn.png"; // Slóð á mynd
+    private static final String SHUFFLEON = "images/shuffleOn.png"; // Slóð á mynd
+    private static final String SHUFFLEOFF = "images/shuffleOff.png"; // Slóð á mynd
+    private double lastVolume = 50.0; // Breyta til að frumstilla hljóð
 
     // viðmótshlutir
     @FXML
@@ -55,7 +58,7 @@ public class ListiController {
     @FXML
     private Button fxNotandi; // nafn notanda
     @FXML
-    private Slider fxVolumeSlider;
+    private Slider fxVolumeSlider; // Hækka / Lækka slider
     @FXML
     private MenuButton speedMenuButton; // Spilunarhraði
 
@@ -65,9 +68,7 @@ public class ListiController {
     private Lag validLag;       // núverandi valið lag
     Boolean repeatFlag = false; // Boolean gildi til að sjá hvort kveikt sé á repeat
     Boolean shuffleFlag = false; // Boolean gildi til að sjá hvort kveikt sé á shuffle
-
-    // breyta til að halda um playbackhraðan
-    private double currentPlaybackSpeed = 1.0;
+    private double currentPlaybackSpeed = 1.0; // breyta til að halda um playbackhraðan
 
 
 
@@ -95,11 +96,9 @@ public class ListiController {
             fxNotandi.setText(PlayerController.getNotandi());
         }
 
+        fxVolumeSlider.setValue(lastVolume); // Setur volume slider í miðjuna
 
-        // Set initial volume slider value
-        fxVolumeSlider.setValue(lastVolume);
-
-        // Add listener to update volume slider when volume changes
+        // Uppfærir slider þegar hljóðstyrkur breytist
         if (player != null) {
             player.volumeProperty().addListener((observable, oldValue, newValue) -> {
                 lastVolume = newValue.doubleValue() * 100.0;
@@ -107,13 +106,14 @@ public class ListiController {
             });
         }
 
-        // Volume slider listener to update player volume
+        // Listiner á slider til að uppfæra hljóðstyrk
         fxVolumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (player != null) {
                 player.setVolume(newValue.doubleValue() / 100.0);
             }
         });
 
+        // Sækir valin hljóðstyrk
         for (MenuItem item : speedMenuButton.getItems()) {
             item.setOnAction(event -> {
                 String speedText = item.getText();
@@ -227,7 +227,8 @@ public class ListiController {
     }
 
     /**
-     * Næsta lag er spilað. Kallað á þessa aðferð þegar fyrra lag á listanum endar
+     * Næsta lag er spilað. Kallað á þessa aðferð þegar fyrra lag á listanum endar. Skoðar hvort að kveikt sé
+     * á repeat eða shuffle og bregst við því
      */
     private void naestaLag() {
         if (repeatFlag) {
@@ -261,6 +262,11 @@ public class ListiController {
         player.setRate(currentPlaybackSpeed); //playback hraði
     }
 
+    /**
+     * Keyrt þegar ýtt er á repeat takka. Mynd á takkanum breytist. Gildi repeatFlag breytist sem segir til
+     * hvort kveikt sé á takkanum eða ekki
+     * @param actionEvent
+     */
     public void onRepeat(ActionEvent actionEvent) {
         if (repeatFlag) {
             setjaMynd(repeatView, REPEATOFF); // Breytur um mynd á takkanum
@@ -278,7 +284,7 @@ public class ListiController {
     }
 
     /**
-     * Stillir hraða spilunar út frá völdnu gildi
+     * Stillir hraða spilunar út frá völdu gildi
      *
      * @param event
      */
@@ -300,6 +306,11 @@ public class ListiController {
         }
     }
 
+    /**
+     * Þegar ýtt er á shuffle takka. Mynd á takkanum breytist og gildi shuffleFlag breytist og segir til
+     * um hvort kveikt sé á takkanum
+     * @param actionEvent
+     */
     public void onShuffle(ActionEvent actionEvent) {
         if (shuffleFlag){
             setjaMynd(fxShuffleBtn, SHUFFLEOFF);
