@@ -14,7 +14,7 @@ public class Lag {
 
     private final int lengd;
 
-    private final String mynd;
+
 
 
     /**
@@ -29,7 +29,6 @@ public class Lag {
         media = slod;
         this.nafn = nafn;
         this.lengd = lengd;
-        this.mynd = mynd;
     }
 
     @Override

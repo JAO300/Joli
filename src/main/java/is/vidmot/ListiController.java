@@ -186,7 +186,6 @@ public class ListiController {
      */
 
     private void spilaLag() {
-        /*setjaMynd(fxPlayPauseView, PAUSE);*/
         // Búa til nýjan player
         setjaPlayer();
         // setja spilun í gang
@@ -216,13 +215,12 @@ public class ListiController {
             player.stop();
         // Smíða nýjan player með nýju Media fyrir lagið
         player = new MediaPlayer(new Media(getClass().getResource(validLag.getMedia()).toExternalForm()));
-        // Láta player vita hvenær lagið endar - stop time
-        player.setStopTime(new Duration(validLag.getLengd()));
+
         // setja fall sem er keyrð þegar lagið hættir
         player.setOnEndOfMedia(this::naestaLag);
         // setja listener tengingu á milli player og progress bar
         player.currentTimeProperty().addListener((observable, old, newValue) ->
-                fxProgressBar.setProgress(newValue.divide(validLag.getLengd()).toMillis()));
+                fxProgressBar.setProgress(newValue.divide(player.getTotalDuration()).toMillis() / 1000.0));
 
     }
 

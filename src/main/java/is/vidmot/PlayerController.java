@@ -143,6 +143,12 @@ public class PlayerController  {
         String selectedItem = fxListView.getSelectionModel().getSelectedItem();
         if(selectedItem != null)
             System.out.println("Valinn listi: " + selectedItem);
+        // Determine the selected list index based on the selected item
+        int selectedIndex = Integer.parseInt(selectedItem.substring(selectedItem.length() - 1)) - 1;
+
+        // Switch to the selected list
+        Lagalistar.setIndex(selectedIndex);
+
         // skiptum yfir í LAGALISTI view
         ViewSwitcher.switchTo(View.LAGALISTI, false);
         //Stoppa player ef lag er í gangi

@@ -50,6 +50,7 @@ public class Lagalistar {
 
     public static void setIndex(int index) {
         Lagalistar.index = index;
+        Lagalistar.getNuverandi().setIndex(0);
     }
 
 }

@@ -39,7 +39,7 @@ public class Lagalisti {
             while (scanner.hasNextLine()) {
 
                 lina = scanner.nextLine().split(" ");
-                listi.add(new Lag (lina[0], lina [3], lina[1], Integer.parseInt(lina[2])));
+                listi.add(new Lag (lina[0], "", lina[1], Integer.parseInt(lina[2])));
             }
             scanner.close();
         }catch (RuntimeException e) {
