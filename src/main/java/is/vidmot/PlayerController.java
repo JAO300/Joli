@@ -29,7 +29,7 @@ import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
 
-import java.io.File;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -437,6 +437,8 @@ public class PlayerController  {
         Optional<Pair<String, List<String>>> result = dialog.showAndWait();
         return result.orElse(null);
     }
+
+
     private void createNewListWithNamedSamples(String listName, List<String> samples) {
         List<String> existingSamplesInLagalisti = new ArrayList<>();
 
@@ -451,9 +453,53 @@ public class PlayerController  {
             System.out.println(chosenSong);
         }
 
-        // You can add more logic here if needed
+        VistaListaSemDatFile(listName, existingSamplesInLagalisti);
+
+
         ObservableList<String> newList = FXCollections.observableArrayList(existingSamplesInLagalisti);
         fxListView.getItems().add(listName);
         PlayerController.selectedSongs.addAll(existingSamplesInLagalisti);
-    }}
+
+    }
+
+
+    private void VistaListaSemDatFile(String listName, List<String> selectedSongs) {
+        PrintWriter writer = null;
+
+        try {
+            // path
+            String directoryPath = "src/main/resources/is/vinnsla/";
+
+            // Býr til directory
+            File directory = new File(directoryPath);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            // býr til Writer
+            writer = new PrintWriter(new FileOutputStream(directoryPath + listName + ".dat"));
+
+            int songNumber = 1;  // Initialize song number
+
+            // Bætir völdnu lögunum til .dat fileið
+            for (String song : selectedSongs) {
+                String fileName = Paths.get(song).getFileName().toString();
+                writer.println("media/" + song + " " + fileName + " " + songNumber);
+                songNumber++;
+            }
+
+            System.out.println("Playlist saved to " + directoryPath + listName + ".dat");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
+    }
+
+
+
+}
+
 
