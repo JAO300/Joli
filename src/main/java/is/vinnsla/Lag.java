@@ -47,10 +47,6 @@ public class Lag {
         return nafn;
     }
 
-    public String getMynd() {
-        return mynd;
-    }
-
     public int getLengd() {
         return lengd;
     }

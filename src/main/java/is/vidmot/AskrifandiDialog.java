@@ -53,7 +53,7 @@ public class AskrifandiDialog extends Dialog<Askrifandi> {
             } else {
                 return null;
             }
-        });         // endir á d.setResultConverter
+        });
     }
 
     /**
