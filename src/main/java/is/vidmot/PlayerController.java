@@ -246,6 +246,7 @@ public class PlayerController  {
             });
         }
         player.setRate(currentPlaybackSpeed); //playback hraði
+        setjaMynd(fxPlayPauseView, PAUSE);
     }
 
     /**

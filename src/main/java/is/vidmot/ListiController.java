@@ -136,6 +136,7 @@ public class ListiController {
         veljaLag();
         // spila lagið
         spilaLag();
+        setjaMynd(fxPlayPauseView, PAUSE);
     }
 
     /**
