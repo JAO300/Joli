@@ -219,10 +219,13 @@ public class ListiController {
         // setja fall sem er keyrð þegar lagið hættir
         player.setOnEndOfMedia(this::naestaLag);
         // setja listener tengingu á milli player og progress bar
-        player.currentTimeProperty().addListener((observable, old, newValue) ->
-                fxProgressBar.setProgress(newValue.divide(player.getTotalDuration()).toMillis() / 1000.0));
+        player.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+                    Duration duration = player.getMedia().getDuration();
+                    double progress = newValue.toSeconds() / duration.toSeconds();
+                    fxProgressBar.setProgress(progress);
 
-    }
+    });}
+
 
     /**
      * Næsta lag er spilað. Kallað á þessa aðferð þegar fyrra lag á listanum endar. Skoðar hvort að kveikt sé
